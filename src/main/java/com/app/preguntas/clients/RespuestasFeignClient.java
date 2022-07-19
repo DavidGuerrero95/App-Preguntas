@@ -14,6 +14,7 @@ public interface RespuestasFeignClient {
 
 	@DeleteMapping("/respuestas/eliminar/proyecto/pregunta/{idProyecto}")
 	public Boolean eliminarRespuestasProyectoFormularioPregunta(@PathVariable("idProyecto") Integer idProyecto,
-			@RequestParam("formulario") Integer formulario, @PathVariable("numeroPregunta") Integer numeroPregunta);
+			@RequestParam(value = "formulario", defaultValue = "1") Integer formulario,
+			@RequestParam("numeroPregunta") Integer numeroPregunta);
 
 }

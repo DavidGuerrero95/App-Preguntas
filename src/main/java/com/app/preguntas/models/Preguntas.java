@@ -35,7 +35,7 @@ public class Preguntas {
 
 	@NotNull(message = "Tipo consulta cannot be null")
 	@Indexed(unique = false)
-	@Max(6)
+	@Max(7)
 	@Min(1)
 	private Integer tipoConsulta;
 

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.app.preguntas.clients.EstadisticaFeignClient;
 import com.app.preguntas.clients.RespuestasFeignClient;
 import com.app.preguntas.models.Preguntas;
 import com.app.preguntas.repository.PreguntasRepository;
@@ -28,6 +29,9 @@ public class PreguntasServices implements IPreguntasServices {
 
 	@Autowired
 	RespuestasFeignClient rClient;
+
+	@Autowired
+	EstadisticaFeignClient eClient;
 
 	@Override
 	public void crearPregunta(Preguntas p) {
@@ -148,6 +152,11 @@ public class PreguntasServices implements IPreguntasServices {
 				() -> rClient.eliminarRespuestasProyectoFormulario(idProyecto, formulario), e -> errorConexion(e))) {
 			log.info("Eliminacion Correcta -> Respuestas");
 		}
+
+		if (cbFactory.create("preguntas").run(() -> eClient.elimininarFormulario(idProyecto, formulario),
+				e -> errorConexion(e))) {
+			log.info("Eliminacion Correcta -> Estadisticas");
+		}
 	}
 
 	@Override
@@ -157,6 +166,11 @@ public class PreguntasServices implements IPreguntasServices {
 				() -> rClient.eliminarRespuestasProyectoFormularioPregunta(idProyecto, formulario, numeroPregunta),
 				e -> errorConexion(e))) {
 			log.info("Eliminacion Correcta -> Respuestas");
+		}
+		if (cbFactory.create("preguntas").run(
+				() -> eClient.elimininarFormularioPregunta(idProyecto, formulario, numeroPregunta),
+				e -> errorConexion(e))) {
+			log.info("Eliminacion Correcta -> Estadisticas");
 		}
 	}
 

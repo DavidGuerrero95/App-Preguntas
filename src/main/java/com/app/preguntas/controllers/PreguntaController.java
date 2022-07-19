@@ -31,6 +31,8 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @Slf4j
 public class PreguntaController {
+	
+
 
 	@SuppressWarnings("rawtypes")
 	@Autowired
@@ -60,7 +62,7 @@ public class PreguntaController {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "2 opciones para la pregunta tipo Kano");
 		if (pregunta.getPriorizacion() == null)
 			pregunta.setPriorizacion("Priorizacion");
-		if (pregunta.getImpacto() == null) {
+		if (pregunta.getImpacto().isEmpty()) {
 			if (pregunta.getTipoConsulta() == 4 || pregunta.getTipoConsulta() == 1)
 				pregunta.setImpacto(Arrays.asList("Excelente impacto", "Alto impacto", "Medio Impacto", "Bajo Impacto",
 						"Pesimo Impacto"));
@@ -80,7 +82,6 @@ public class PreguntaController {
 				e -> encontrarProyecto(pregunta.getIdProyecto(), e))) {
 			if (!pServices.existsIdNumeroFormulario(pregunta.getIdProyecto(), pregunta.getNumeroPregunta(),
 					pregunta.getFormulario())) {
-
 				if (cbFactory.create("preguntas")
 						.run(() -> eClient.crearResultados(pregunta.getIdProyecto(), pregunta.getFormulario(),
 								pregunta.getNumeroPregunta(), pregunta.getPregunta(), pregunta.getTipoConsulta(),

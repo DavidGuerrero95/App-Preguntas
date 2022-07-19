@@ -1,11 +1,10 @@
 S:\Users\Documentos\SmartCity\Aplicacion\workspace\App-Preguntas\src\main\java\com\app\preguntas\config\SwaggerConfiguration.java
 S:\Users\Documentos\SmartCity\Aplicacion\workspace\App-Preguntas\src\main\java\com\app\preguntas\clients\ProyectosFeignClient.java
 S:\Users\Documentos\SmartCity\Aplicacion\workspace\App-Preguntas\src\main\java\com\app\preguntas\services\IPreguntasServices.java
-S:\Users\Documentos\SmartCity\Aplicacion\workspace\App-Preguntas\src\main\java\com\app\preguntas\repository\ProyectosRepository.java
 S:\Users\Documentos\SmartCity\Aplicacion\workspace\App-Preguntas\src\main\java\com\app\preguntas\AppPreguntasApplication.java
 S:\Users\Documentos\SmartCity\Aplicacion\workspace\App-Preguntas\src\main\java\com\app\preguntas\controllers\PreguntaController.java
 S:\Users\Documentos\SmartCity\Aplicacion\workspace\App-Preguntas\src\main\java\com\app\preguntas\clients\RespuestasFeignClient.java
 S:\Users\Documentos\SmartCity\Aplicacion\workspace\App-Preguntas\src\main\java\com\app\preguntas\repository\PreguntasRepository.java
 S:\Users\Documentos\SmartCity\Aplicacion\workspace\App-Preguntas\src\main\java\com\app\preguntas\services\PreguntasServices.java
-S:\Users\Documentos\SmartCity\Aplicacion\workspace\App-Preguntas\src\main\java\com\app\preguntas\models\Proyectos.java
+S:\Users\Documentos\SmartCity\Aplicacion\workspace\App-Preguntas\src\main\java\com\app\preguntas\clients\EstadisticaFeignClient.java
 S:\Users\Documentos\SmartCity\Aplicacion\workspace\App-Preguntas\src\main\java\com\app\preguntas\models\Preguntas.java

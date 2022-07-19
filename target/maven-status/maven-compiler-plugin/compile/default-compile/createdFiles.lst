@@ -1,11 +1,10 @@
 com\app\preguntas\clients\RespuestasFeignClient.class
 com\app\preguntas\controllers\PreguntaController.class
+com\app\preguntas\models\Preguntas.class
 com\app\preguntas\repository\PreguntasRepository.class
+com\app\preguntas\clients\EstadisticaFeignClient.class
 com\app\preguntas\clients\ProyectosFeignClient.class
+com\app\preguntas\AppPreguntasApplication.class
 com\app\preguntas\config\SwaggerConfiguration.class
 com\app\preguntas\services\PreguntasServices.class
-com\app\preguntas\models\Preguntas.class
-com\app\preguntas\AppPreguntasApplication.class
-com\app\preguntas\repository\ProyectosRepository.class
-com\app\preguntas\models\Proyectos.class
 com\app\preguntas\services\IPreguntasServices.class
