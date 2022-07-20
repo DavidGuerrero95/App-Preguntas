@@ -58,59 +58,49 @@ public class PreguntasServices implements IPreguntasServices {
 			p.setPriorizacion(pregunta.getPriorizacion());
 		if (pregunta.getObligatorio() != null)
 			p.setObligatorio(pregunta.getObligatorio());
-		if (pregunta.getTipoConsulta() != null && !pregunta.getTipoConsulta().equals(p.getTipoConsulta())) {
-			if (pregunta.getTipoConsulta() == 5) {
-				p.setOpciones(new ArrayList<String>());
-				p.setTipoConsulta(pregunta.getTipoConsulta());
-				if (cbFactory
-						.create("preguntas").run(
-								() -> rClient.eliminarRespuestasProyectoFormularioPregunta(pregunta.getIdProyecto(),
-										pregunta.getFormulario(), pregunta.getNumeroPregunta()),
-								e -> errorConexion(e))) {
-					log.info("Eliminacion Correcta -> Respuestas");
-				}
-			}
-			if ((p.getTipoConsulta() == 1 || p.getTipoConsulta() == 4)
-					&& (pregunta.getTipoConsulta() == 1 || pregunta.getTipoConsulta() == 4)) {
-				p.setTipoConsulta(pregunta.getTipoConsulta());
-				if (cbFactory
-						.create("preguntas").run(
-								() -> rClient.eliminarRespuestasProyectoFormularioPregunta(pregunta.getIdProyecto(),
-										pregunta.getFormulario(), pregunta.getNumeroPregunta()),
-								e -> errorConexion(e))) {
-					log.info("Eliminacion Correcta -> Respuestas");
-				}
-			} else {
-				if ((pregunta.getOpciones() == null || pregunta.getOpciones().size() == 0))
-					throw new ResponseStatusException(HttpStatus.CONFLICT, "Se debe modificar las opciones");
-				if (pregunta.getOpciones().size() != 2 && p.getTipoConsulta() == 6)
-					throw new ResponseStatusException(HttpStatus.CONFLICT,
-							"El tamaño de las opciones tipo Kano debe ser 2");
-				if ((pregunta.getTipoConsulta() == 1 || pregunta.getTipoConsulta() == 4)
-						&& pregunta.getImpacto() == null && pregunta.getImpacto().size() != 5)
-					throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "5 impactos para la pregunta tipo 1 y 4");
-				if (pregunta.getTipoConsulta() == 6 && pregunta.getImpacto() != null
-						&& pregunta.getImpacto().size() != 6)
-					throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "6 impactos para la pregunta tipo kano");
-				p.setTipoConsulta(pregunta.getTipoConsulta());
-				if (cbFactory
-						.create("preguntas").run(
-								() -> rClient.eliminarRespuestasProyectoFormularioPregunta(pregunta.getIdProyecto(),
-										pregunta.getFormulario(), pregunta.getNumeroPregunta()),
-								e -> errorConexion(e))) {
-					log.info("Eliminacion Correcta -> Respuestas");
-				}
-			}
-		}
-		if (pregunta.getOpciones() != null) {
-			if (pregunta.getOpciones().size() == 0 && p.getTipoConsulta() != 5)
-				throw new ResponseStatusException(HttpStatus.CONFLICT, "El tamaño de las opciones debe ser mayor");
-			if (pregunta.getOpciones().size() != 2 && p.getTipoConsulta() == 6)
-				throw new ResponseStatusException(HttpStatus.CONFLICT,
-						"El tamaño de las opciones tipo Kano debe ser 2");
-			if (p.getTipoConsulta() != 5)
-				p.setOpciones(pregunta.getOpciones());
-		}
+		/*
+		 * if (pregunta.getTipoConsulta() != null &&
+		 * !pregunta.getTipoConsulta().equals(p.getTipoConsulta())) { if
+		 * (pregunta.getTipoConsulta() == 5) { p.setOpciones(new ArrayList<String>());
+		 * p.setTipoConsulta(pregunta.getTipoConsulta()); if (cbFactory
+		 * .create("preguntas").run( () ->
+		 * rClient.eliminarRespuestasProyectoFormularioPregunta(pregunta.getIdProyecto()
+		 * , pregunta.getFormulario(), pregunta.getNumeroPregunta()), e ->
+		 * errorConexion(e))) { log.info("Eliminacion Correcta -> Respuestas"); } } if
+		 * ((p.getTipoConsulta() == 1 || p.getTipoConsulta() == 4) &&
+		 * (pregunta.getTipoConsulta() == 1 || pregunta.getTipoConsulta() == 4)) {
+		 * p.setTipoConsulta(pregunta.getTipoConsulta()); if (cbFactory
+		 * .create("preguntas").run( () ->
+		 * rClient.eliminarRespuestasProyectoFormularioPregunta(pregunta.getIdProyecto()
+		 * , pregunta.getFormulario(), pregunta.getNumeroPregunta()), e ->
+		 * errorConexion(e))) { log.info("Eliminacion Correcta -> Respuestas"); } } else
+		 * { if ((pregunta.getOpciones() == null || pregunta.getOpciones().size() == 0))
+		 * throw new ResponseStatusException(HttpStatus.CONFLICT,
+		 * "Se debe modificar las opciones"); if (pregunta.getOpciones().size() != 2 &&
+		 * p.getTipoConsulta() == 6) throw new
+		 * ResponseStatusException(HttpStatus.CONFLICT,
+		 * "El tamaño de las opciones tipo Kano debe ser 2"); if
+		 * ((pregunta.getTipoConsulta() == 1 || pregunta.getTipoConsulta() == 4) &&
+		 * pregunta.getImpacto() == null && pregunta.getImpacto().size() != 5) throw new
+		 * ResponseStatusException(HttpStatus.BAD_REQUEST,
+		 * "5 impactos para la pregunta tipo 1 y 4"); if (pregunta.getTipoConsulta() ==
+		 * 6 && pregunta.getImpacto() != null && pregunta.getImpacto().size() != 6)
+		 * throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+		 * "6 impactos para la pregunta tipo kano");
+		 * p.setTipoConsulta(pregunta.getTipoConsulta()); if (cbFactory
+		 * .create("preguntas").run( () ->
+		 * rClient.eliminarRespuestasProyectoFormularioPregunta(pregunta.getIdProyecto()
+		 * , pregunta.getFormulario(), pregunta.getNumeroPregunta()), e ->
+		 * errorConexion(e))) { log.info("Eliminacion Correcta -> Respuestas"); } } } if
+		 * (pregunta.getOpciones() != null) { if (pregunta.getOpciones().size() == 0 &&
+		 * p.getTipoConsulta() != 5) throw new
+		 * ResponseStatusException(HttpStatus.CONFLICT,
+		 * "El tamaño de las opciones debe ser mayor"); if
+		 * (pregunta.getOpciones().size() != 2 && p.getTipoConsulta() == 6) throw new
+		 * ResponseStatusException(HttpStatus.CONFLICT,
+		 * "El tamaño de las opciones tipo Kano debe ser 2"); if (p.getTipoConsulta() !=
+		 * 5) p.setOpciones(pregunta.getOpciones()); }
+		 */
 		if (pregunta.getImpacto() != null) {
 			if ((pregunta.getTipoConsulta() == 1 || pregunta.getTipoConsulta() == 4)
 					&& pregunta.getImpacto().size() != 5)
