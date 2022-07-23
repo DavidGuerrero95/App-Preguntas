@@ -31,8 +31,6 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @Slf4j
 public class PreguntaController {
-	
-
 
 	@SuppressWarnings("rawtypes")
 	@Autowired
@@ -153,14 +151,19 @@ public class PreguntaController {
 	// VER CANTIDAD PREGUNTAS
 	@GetMapping("/preguntas/cantidad/{idProyecto}/{formulario}/")
 	@ResponseStatus(code = HttpStatus.OK)
-	public Integer verCantidad(@PathVariable(value = "idProyecto") Integer idProyecto,
+	public List<Integer> verCantidad(@PathVariable(value = "idProyecto") Integer idProyecto,
 			@PathVariable(value = "formulario", required = false) Integer formulario) {
 		if (cbFactory.create("preguntas").run(() -> prClient.existCodigoProyecto(idProyecto),
 				e -> encontrarProyecto(idProyecto, e))) {
 			if (formulario == null)
 				formulario = 1;
 			if (pServices.existIdFormulario(idProyecto, formulario)) {
-				return pServices.verTodas(idProyecto, formulario).size();
+				List<Preguntas> p = pServices.verTodas(idProyecto, formulario);
+				List<Integer> cP = new ArrayList<Integer>();
+				p.forEach(x -> {
+					cP.add(x.getNumeroPregunta());
+				});
+				return cP;
 			}
 			throw new ResponseStatusException(HttpStatus.LENGTH_REQUIRED, "El Proyecto no tiene preguntas");
 		}
